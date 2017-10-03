@@ -2,9 +2,13 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <limits.h>
-//#include "child.h"
+#include "child.h"
+
 /*gcc child.c main.c -o */
 
 int main(int argc, char* argv[]) {
@@ -18,8 +22,8 @@ int main(int argc, char* argv[]) {
 	}
 	
 	number_of_processes = atoi(argv[1]);
-	if (number_of_processes < 1) {
-		printf("%s: the number of processes must be grreater than 1.\n", argv[0]);
+	if (number_of_processes < 2) {
+		printf("%s: the number of processes must be greater than 1.\n", argv[0]);
 		return -1;
 	}
 	
@@ -56,7 +60,7 @@ int main(int argc, char* argv[]) {
 		kill(data[i], SIGUSR2);
 	}
 	while (i > 0) {
-		wait();
+		wait(NULL);
 		printf("PID = %i a child has ended\n", getpid());
 		i--;
 	}
