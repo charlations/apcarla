@@ -4,6 +4,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <limits.h>
+//#include "child.h"
+/*gcc child.c main.c -o */
 
 int main(int argc, char* argv[]) {
 	int fd_out;
