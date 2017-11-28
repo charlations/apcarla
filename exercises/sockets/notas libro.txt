@@ -1,0 +1,95 @@
+Big Endian vs Little Endian 
+
+An integer (4 bytes) 
+55 = 0000 0000 0011 0111
+
+En Big Endian:      0000 0000 0011 0111
+En Little Endian:   0111 0011 0000 0000
+¯\_(ツ)_/¯
+
+
+ONLY FOR CONNECTION ORIENTED NETWORKS (SOCK_STREAM OR SOCK_SEQPACKET)
+  | #include <sys/socket.h>
+  | int connect(int sockfd, const struct sockaddr *addr, sockklen_t len);
+  | Returns: 0 if OK, -1 on error
+
+  The address we specify with connect is the address of the server with which
+  we wish to communicate. If sockfd is not bound to an address, connect will
+  bind a default address for the caller.
+
+A server announces that it is willing to accept connect requests by calling the
+listen function
+| #include <sys/socket.h>
+| int listen(int sockfd, int backlog);
+| Returns: 0 if OK, -1 on error
+
+Once a server has called listen, the socket used can recieve connect requests.
+We use the accept function to retrieve a connect request and convert it into a
+connection
+| #include <sys/socket.h>
+| int accept(int sockfd, struct sockaddr *restrict addr,
+|           socklen_t *restrict len);
+| Return file (socket) descriptor if OK, -1 on error
+The file descriptor returned by accept is a socket descriptor that is connected
+to the client that called connect. This new socket descriptor has the same
+socket type and address family as the original socket (sockfd). The original
+socket passed to accept is not associated with the connection, but instead
+remains available to retireve additional connect requests. 
+
+If we don’t care about the client’s identity, we can set the addr and len 
+parameters to NULL. Otherwise, before calling accept, we need to set the addr 
+parameter to a buffer large enough to hold the address and set the integer 
+pointed to by len to the size of the buffer in bytes. On return, accept will 
+fill in the client’s address in the buffer and update the integer pointed to 
+by len to reflect the size of the address.
+
+.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+Creo que esto es lo que mencionó Peter de que (en el caso de la tarea 7) no
+se necesita tener un log de las conexiones. CREO que en la tarea 7 no se 
+ocupa esto. 
+.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+If no connect requests are pending, accept will block until one arrives. 
+
+Sending and Recieving Data
+  Send 
+    It is similar to write, but allows us to specify flags to change how the 
+    data we want to transmit is treated.
+    | #include <sys/socket.h>
+    | ssize_t send(int sockfd, const void *buf, size_t nbytes, int flags);
+    | Returns: number of bytes sent if OK, −1 on error
+    Socket has to be connected to use Send, then goes the buffer and size of the
+    information being sent. However, unlike write, send has a fourth argument: 
+      flag
+        MGS_CONFIRM
+          Provide feedback to link layer to keep address mapping valid
+        MSG_DONTROUTE
+          Don't route packet outside of local network
+        MSG_DONTWAIT
+          Equivalent to O_NONBLOCK
+          Enable nonblocking operations
+        MSG_EOF
+          Shut sender side of socket after data is sent
+        MSG_EOR
+          End Of Record (only if supported by protocol)
+        MSG_MORE
+          Delay sending packet to allow more data to be written
+        MSG_NOSIGNAL
+          Don't generate SIGPIPE when writing to an unconnected socket
+        MSG_OOB
+          Out Of Band (not bound) data (only if supported by protocol)
+    Success ONLY means the network drivers recieved the data, not that it was
+    recieved by the other end of the process.
+  Sendto
+    Similar to send, but allows us to specify a dastination address for
+    connectionless sockets.
+    | #include <sys/socket.h>
+    | ssize_t sendto(int sockfd, const void *buf, size_t nbytes, int flags,
+    |               const struct sockaddr *destaddr, socklen_t destlen);
+    | Returns: number of bytes sent if OK, −1 on error
+    With a connection-oriented socket, the destination address is ignored, as 
+    the destination is implied by the connection. With a connectionless socket,
+    we can’t use send unless the destination address is first set by calling 
+    connect, so sendto gives us an alternate way to send a message.
+    
+    (pg 611 [645 / 1034])

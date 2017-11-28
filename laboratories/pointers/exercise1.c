@@ -48,7 +48,7 @@ void load_data() {
    Regresa el apuntador al punto leído (points) más 
    cercano a p */
 Point* get_near_from(const Point* p) {
-	Point *near = &points[0]; //es lo mismo que piner "points"
+	Point *near = &points[0]; //es lo mismo que poner "points"
 	/*const */Point *punto = (Point*) malloc(sizeof(Point));
 	//printf("near = %f, %f\n", near.x, near.y);
 	float aux;

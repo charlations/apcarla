@@ -1,0 +1,14 @@
+Como son el mismo ________, no se necesita separar "..." (shit, se me 
+olvidó.)
+
+Si quiero recibir datos adicionales, thread2.c
+  Es básicamente lo mismo, pero ahora cada thread tiene un límite
+  diferente.
+  
+Una señal de condición es como un semáforo, pero con una condición que se
+  debe cumplir para asegurarse que no se haya cumplido. En vez de que se
+  haga una trasferencia de estado de buscando el candado a esperando, en 
+  el que se puede liberar el candado, haciendo perder tiempo, se mantiene
+  en un ciclo hasta que se cumpla la condición (se libera el candado) o, 
+  si pasa mucho tiempo, si se queda a esperando.
+  

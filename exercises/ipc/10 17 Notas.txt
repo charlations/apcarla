@@ -1,0 +1,21 @@
+/** Es crear pipes, semáforos, queues y shared memory para que diferentes
+ *  processos puedan comunicarse entre sí. Ésto es sin que cause conflictos de
+ *  información al estar leyendo y escribiendo sobre una cosa al mismo tiempo.
+ *  Wikipedia: https://en.wikipedia.org/wiki/Software_architecture
+ *  
+ *  Se hace un archivo FIFO que puede ser tan grande como lo permita el sistema
+ *  operativo (en UNIX es de 16 GB).
+ *  
+ *  
+ *  En una Pipeline, la comunicación va de [GRANPA] -> [PA] -> [CHILD].
+ *  Debe darse primero la orden al hijo, luego al padre, luego al abuelo, para
+ *  que acabe primero el hijo, le de la respuesta al padre, y éste luego le de
+ *  respuesta al abuelo. (No queden procesos huérfanos).
+ *  
+ *  
+ *  LIBRO DE SEMÁFORO: greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
+ *  
+ *  
+ *  
+ *  
+**/

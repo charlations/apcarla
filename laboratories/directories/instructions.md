@@ -8,7 +8,10 @@
 ## Descripción
 
 ![alt text](https://github.com/Manchas2k4/advanced_programming/blob/master/documents/images/d_b.png "Descripción") 
-* Durante la sesión, de manera individual, deberás desarrollar un programa que, a partir de las entradas de un archivo tipo directorio, obtiene información estadística de su contenido.
+* Durante la sesión, de manera individual, deberás
+* desarrollar un programa que, a partir de las
+* entradas de un archivo tipo directorio, obtiene
+* información estadística de su contenido.
 
 ## Modalidad
 
@@ -16,7 +19,8 @@
 * Individual.
 
 ## Objetivos de la actividad
-* Utilizar las llamadas a sistema relacionadas con la manipulación de archivos tipo directorio.
+* Utilizar las llamadas a sistema relacionadas con
+* la manipulación de archivos tipo directorio.
 
 ## Instrucciones
   
@@ -24,11 +28,19 @@
   
   Implementa la solución del siguiente problema:
   
-  Escribe un programa llamado `estadistica` que despliega recursivamente la información sobre el tipo de archivos que hay en un directorio. La forma de invocar el programa será:
+  Escribe un programa llamado `estadistica` que
+  despliega recursivamente la información sobre el
+  tipo de archivos que hay en un directorio.
+  La forma de invocar el programa será:
 
     `$ estadistica [directorio]`
 
-   El programa deberá mostrar los tipos de archivos que hay en el directorio (y sus subdirectorios). El porcentaje que presentan siempre es con respecto al total de archivos de ese directorio en particular. El directorio por omisión es el directorio de trabajo.
+   El programa deberá mostrar los tipos de archivos
+   que hay en el directorio (y sus subdirectorios).
+   El porcentaje que presentan siempre es con
+   respecto al total de archivos de ese directorio
+   en particular. El directorio por omisión es el
+   directorio de trabajo.
 
    Ejemplo:
 
@@ -84,7 +96,8 @@
 ## Especificaciones de entrega
 
 ![alt text](https://github.com/Manchas2k4/advanced_programming/blob/master/documents/images/d_f.png "Especificaciones")
-* Enviar a través de la sección de "Tareas" de Blackboard.
+* Enviar a través de la sección de "Tareas" de
+* Blackboard.
 
 
 <br>

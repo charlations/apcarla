@@ -1,0 +1,45 @@
+/**solo puede haber uno en la sona compartida, ya sea consumidos o servidor
+ * Se pone el MUTEX para asegurar que solo esté una persona a la vez
+ * EMPTY se activa si no hay nada que tomar, es el que detiene a los consumidores
+ * FULL detiene a los productores de entrar
+ * 
+ * 
+ * 
+charlations $ gcc 10\ 24\ buffer.c 
+charlations $ ./a.out
+  1 10  0
+charlations $ ipcs 
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+/** si hubiera un
+0x00000000 #######    ubuntu     600        #####*     2          dest
+ *  sería una memoria del systema operativo. (solo el systema puede poner 
+ *  llave de 0x00000000)
+**/
+/** OJO: aquí no hay shared memory, está la posibilidad de que c9.io no me
+ *  esté dejando crear memoria compartida
+**/
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+0x41e2150f 0          ubuntu     666        3         
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+ * 
+ * 
+ * 
+ * Los semáforos funcionan porque se usan 2 a la vez: cuando a uno le resto, al otro
+ *  le sumo y viceversa. Como se hacen ámbos, el 0 de EMPTY no permite que los 
+ *  productores pongan y el 0 de FULL no permite que los consumidores quiten.
+ *  Un semáforo realmente solo es un contador. No tiene máximo ni nada. 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+**/

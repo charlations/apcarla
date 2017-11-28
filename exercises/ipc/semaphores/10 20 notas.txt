@@ -1,0 +1,62 @@
+/**
+ *  LIBRO DE SEMÁFORO: greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
+ *  
+ *  2 tipos de semáforos:
+ *  Contador:
+ *    Tiene un contador e recursos finitos que va creciendo o decreciendo
+ *  
+ *  
+ *  
+ *  Mutex:
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  En un command promot, si escribes "$ ipcs ", te regresa todos los semáforos 
+ *  En el caso de un usuario (NO DE UN SISTEMA OPERATIVO!), bajo una llave se
+ *   puede tener fila de mensajes y/o conjunto de semáforos y/o memoria compartida
+ *  
+ *  
+ *  MANEJO EN LA TERMINAL:
+charlations $ cd exercises/ipc/semaphores/
+charlations $ gcc 10\ 20\ buffer.c
+charlations $ ./a.out 3
+
+value:   1  1  0  3
+
+charlations $ gcc 10\ 20\ consumers.c
+charlations $ ./a.out 3
+
+Consumer 2554 trying to acces the buffer.
+Consumer 2554 accesing the buffer.
+Consumer 2554 trying to et 1 product(s) - items = 0
+Consumer 2556 trying to acces the buffer.
+Consumer 2555 trying to acces the buffer.
+
+charlations $ ipcs
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+0x7d16b15e 32768      ubuntu     666        4         
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+
+charlations $ ipcrm -s 32768
+
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+ *  
+**/

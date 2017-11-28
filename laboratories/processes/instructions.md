@@ -8,7 +8,8 @@
 ## Descripción
 
 ![alt text](https://github.com/Manchas2k4/advanced_programming/blob/master/documents/images/d_b.png "Descripción") 
-* Durante la sesión, de manera individual, deberás desarrollar un programa que nos permite crear procesos de una forma muy particular.
+* Durante la sesión, de manera individual, deberás desarrollar un programa que 
+* nos permite crear procesos de una forma muy particular.
 
 ## Modalidad
 
@@ -16,7 +17,8 @@
 * Individual.
 
 ## Objetivos de la actividad
-* Utilizar las llamadas a sistema relacionadas con la administración de procesos.
+* Utilizar las llamadas a sistema relacionadas con la administración de
+* procesos.
 
 ## Instrucciones
   
@@ -24,11 +26,17 @@
   
   Implementa la solución del siguiente problema:
   
-  Escribe un programa llamado `descendiendo`. El programa recibe de línea de comando un número entero. La forma de invocar el programa será:
+  Escribe un programa llamado `descendiendo`. El programa recibe de línea de
+  comando un número entero. La forma de invocar el programa será:
 
     `$ descendiendo num`
 
-   El programa generará el siguiente árbol de procesos: el proceso inicial creará 1 hijo, le llamaremos NIVEL1; NIVEL1 creará dos NIVEL2; cada NIVEL2 creará 3 hijos NIVEL3; y así sucesivamente NIVELN-1 creará N hijos. Cada proceso deberá desplegar información sobre el id de su padre y su propio id. Cada proceso deberá esperar hasta que todos sus hijos hayan terminado.
+   El programa generará el siguiente árbol de procesos: el proceso inicial
+   creará 1 hijo, le llamaremos NIVEL1; NIVEL1 creará dos NIVEL2; cada NIVEL2
+   creará 3 hijos NIVEL3; y así sucesivamente NIVELN-1 creará N hijos.
+   Cada proceso deberá desplegar información sobre el id de su padre y su
+   propio id. Cada proceso deberá esperar hasta que todos sus hijos hayan
+   terminado.
 
    Ejemplo:
 

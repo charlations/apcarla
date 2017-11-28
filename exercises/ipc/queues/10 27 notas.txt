@@ -1,0 +1,80 @@
+charlations: $ cd queues/example1/
+charlations: $ gcc 10\ 27\ create_queue.c
+charlations: $ ./a.out
+The queue 0 has been created.
+charlations: $ ipcs
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x18ae1ae5 0          ubuntu     666        0            0           
+
+charlations: $ gcc 10\ 27\ put_msg.c -o put
+charlations: $ ./put
+MESSAGE POSTED: msg_type = 3 process = 1978 value = 64
+MESSAGE POSTED: msg_type = 2 process = 1978 value = 20
+MESSAGE POSTED: msg_type = 4 process = 1978 value = 28
+MESSAGE POSTED: msg_type = 4 process = 1978 value = 71
+MESSAGE POSTED: msg_type = 3 process = 1978 value = 57
+MESSAGE POSTED: msg_type = 4 process = 1978 value = 35
+MESSAGE POSTED: msg_type = 1 process = 1978 value = 11
+MESSAGE POSTED: msg_type = 3 process = 1978 value = 35
+MESSAGE POSTED: msg_type = 4 process = 1978 value = 48
+MESSAGE POSTED: msg_type = 3 process = 1978 value = 39
+MESSAGE POSTED: msg_type = 4 process = 1978 value = 19
+charlations: $ gcc 10\ 27\ read_msg.c -o read
+charlations: $ ./read 2
+MESSAGE READ: msg_type = 2 process = 1978 value = 20
+charlations: $ ipcs
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x18ae1ae5 0          ubuntu     666        160          10          
+
+charlations: $ ./read 4
+MESSAGE READ: msg_type = 4 process = 1978 value = 28
+MESSAGE READ: msg_type = 4 process = 1978 value = 71
+MESSAGE READ: msg_type = 4 process = 1978 value = 35
+MESSAGE READ: msg_type = 4 process = 1978 value = 48
+MESSAGE READ: msg_type = 4 process = 1978 value = 19
+charlations: $ ipcs
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x18ae1ae5 0          ubuntu     666        80           5           
+
+charlations: $ ./read 1
+MESSAGE READ: msg_type = 1 process = 1978 value = 11
+charlations: $ ./read 3
+MESSAGE READ: msg_type = 3 process = 1978 value = 64
+MESSAGE READ: msg_type = 3 process = 1978 value = 57
+MESSAGE READ: msg_type = 3 process = 1978 value = 35
+MESSAGE READ: msg_type = 3 process = 1978 value = 39
+charlations: $ ipcs
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x18ae1ae5 0          ubuntu     666        0            0           
