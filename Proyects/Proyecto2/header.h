@@ -32,7 +32,7 @@
 #define SendingFile 301
 #define SendingDir 302
 
-#define DEFAULT_PORT 9999
+#define DEFAULT_PORT 9997
 #define DEFAULT_IP "127.0.0.1"
 #define SIZE 1000
 

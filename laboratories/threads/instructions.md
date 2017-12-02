@@ -25,16 +25,18 @@ problemas de concurrencia usando pthreads.
   
   Implementa la solución del siguiente problema:
   
- * Desarrolla un programa que calcule las raíces cuadradas de los números enteros de 0 a 99
-en un hilo separado y devuelve una matriz de dobles que contienen los resultados. Mientras
-tanto, el hilo principal debe mostrar un mensaje corto para el usuario y, a continuación
-mostrar los resultados de la computación cuando están listos.
+ * Desarrolla un programa que calcule las raíces cuadradas de los números 
+ * enteros de 0 a 99 en un hilo separado y devuelve una matriz de dobles que 
+ * contienen los resultados. Mientras tanto, el hilo principal debe mostrar un 
+ * mensaje corto para el usuario y, a continuación mostrar los resultados de la 
+ * computación cuando están listos.
 
-* El jardín botánico de la Ciudad de México se encuentra abierto a todo el público. Cualquier
-persona puede entrar por uno de los dos accesos que tiene el jardin: hacia el este y oeste del
-mismo. La administración desea determinar cuántas personas hay en el jardín en un
-momento dado. Diseña una solución en pthreads hacer esto. El programa representará cada
-entrada con un pthread y actualiza un contador compartido.
+ * El jardín botánico de la Ciudad de México se encuentra abierto a todo el 
+ * público. Cualquier persona puede entrar por uno de los dos accesos que tiene 
+ * el jardin: hacia el este y oeste del mismo. La administración desea determinar
+ * cuántas personas hay en el jardín en un momento dado. Diseña una solución en 
+ * pthreads hacer esto. El programa representará cada entrada con un pthread y 
+ * actualiza un contador compartido.
 
 ## Recursos
 
