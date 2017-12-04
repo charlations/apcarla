@@ -1,4 +1,6 @@
 #include "header.h"
+//time
+#include <time.h>
 
 void sendError(int nsfd, int errorType) {
   int msg_size;
@@ -40,13 +42,33 @@ void sendError(int nsfd, int errorType) {
   strcpy(reply, "");
 }
 
-void execGet(int nsfd, char *rootDir) {
+void logAction(char *cliAddr, char *message) {
+  int logSize = SIZE + (2 * NAME_MAX);
+  int fd_out;
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+  char logmsg[logSize];
+  
+  sprintf(logmsg, "Cliente %s - %d/%d/%d %d:%d:%d\n%s\n\n", cliAddr, 
+          (tm.tm_year + 1900), (tm.tm_mon + 1), tm.tm_mday, tm.tm_hour, tm.tm_min, 
+          tm.tm_sec, message);
+          
+  if( (fd_out = open("log", O_WRONLY | O_CREAT | O_APPEND, 0666)) < 0 ) {
+    printf("Error de log\n");
+    exit(-1);
+  }
+  write(fd_out, logmsg, strlen(logmsg));
+  close(fd_out);
+}
+
+void execGet(int nsfd, char *rootDir, char *cliAddr) {
   int msg_size, code_sent;
   char addr[NAME_MAX + 1];
   char aux[NAME_MAX + 1];
   char reply[SIZE];
   struct stat ss;
   int fd_in;
+  char logmsg[NAME_MAX + SIZE];
   
 	//Vaciar los strings
 	memset(addr, '\0', sizeof(addr));
@@ -91,12 +113,15 @@ void execGet(int nsfd, char *rootDir) {
   write(nsfd, &msg_size, sizeof(msg_size));
   write(nsfd, &reply, msg_size * sizeof(char));
   
+  sprintf(logmsg, "GET - %s", reply);
+  logAction(cliAddr, logmsg);
+  
   //limpiando
   code_sent = 0;
   strcpy(reply, "");
 }
 
-void execList(int nsfd, char *rootDir){
+void execList(int nsfd, char *rootDir, char *cliAddr){
   int msg_size, code_sent;
   char addr[NAME_MAX + 1];
   char aux[NAME_MAX + 1];
@@ -104,6 +129,7 @@ void execList(int nsfd, char *rootDir){
   struct stat ss;
   DIR *newDir;
   struct dirent *dir_entry;
+  char logmsg[NAME_MAX + SIZE];
   
 	//Vaciar los strings
 	memset(addr, '\0', sizeof(addr));
@@ -153,14 +179,19 @@ void execList(int nsfd, char *rootDir){
   write(nsfd, &msg_size, sizeof(msg_size));
   write(nsfd, &reply, msg_size * sizeof(char));
   
+  sprintf(logmsg, "GET - %s", reply);
+  logAction(cliAddr, logmsg);
+  
   //limpiando
   code_sent = 0;
   strcpy(reply, "");
 }
 
-void execBye(int nsfd) {
+void execBye(int nsfd, char *cliAddr) {
   int msg_size;
   char addr[NAME_MAX + 1];
+  
+  logAction(cliAddr, "Finalizo coneccion");
   
   memset(addr, '\0', sizeof(addr));
   
@@ -170,7 +201,7 @@ void execBye(int nsfd) {
 }
 
 
-void serves_client(int nsfd, char *rootDir) {
+void serves_client(int nsfd, char *rootDir, char* cliAddr) {
   int code_sent, cmd_recieved, msg_size;
   //char addr[NAME_MAX + 1];
   char reply[SIZE];
@@ -193,13 +224,13 @@ void serves_client(int nsfd, char *rootDir) {
     switch(cmd_recieved) {
       case GET:
         printf("Received cmd LOG\n");
-        execGet(nsfd, rootDir);
+        execGet(nsfd, rootDir, cliAddr);
       break;
       case LIST:
-        execList(nsfd, rootDir);
+        execList(nsfd, rootDir, cliAddr);
       break;
       case BYE:
-        execBye(nsfd);
+        execBye(nsfd, cliAddr);
       break;
       default:
         sendError(nsfd, UnknownCommand);
@@ -220,9 +251,7 @@ void server(char* ip, int port, char* root, char* program){
   struct stat st = {0};
   
   printf("root = %s\tport = %i\tip = %s\n", root, port, ip);
-  if (stat(root, &st) == -1) {
-      mkdir(root, 0700);
-  }
+  
   //Entrar a root directory
   if ( (dir = opendir(root)) == NULL ) {
 	perror(program);
@@ -250,11 +279,16 @@ void server(char* ip, int port, char* root, char* program){
         exit(-1);
     }
     
+    char cliAddr[len];
+    inet_ntop(AF_INET, &(client_info.sin_addr), cliAddr, len);
+    //printf("client address: %s\n",cliAddr);
+    logAction(cliAddr, "Inicio coneccion");
+    
     if ( (pid = fork()) < 0 ){
         perror(program);
     } else if (pid == 0) {
        close(sfd); //el proceso hijo no requiere escuchar, por eso cierra el canal de escucha
-       serves_client(nsfd, root);
+       serves_client(nsfd, root, cliAddr);
        exit(0);
     } else {
        close(nsfd);
@@ -271,10 +305,8 @@ int main(int argc, char* argv[]){
     strcpy(ip, DEFAULT_IP);
     strcpy(root,  "./prueba");
 	port = DEFAULT_PORT;
-	if (argc == 2){
-	    strcpy(root, argv[1]);
-	}
-	if(argc > 2){
+	
+	if(argc > 1){
 	    printf("Usage: %s [rootDir]", argv[0]);
 	    return -1;
 	}
