@@ -33,6 +33,10 @@ int main(int argc, char* argv[]) {
 	read(sfd, &msg_size, sizeof(int));
 	read(sfd, &reply, msg_size * sizeof(char));
 	do {
+		//Vaciar los strings
+		memset(addr, '\0', sizeof(addr));
+		memset(reply, '\0', sizeof(reply));
+		
 	    printf("Escribe la orden (cat = 1, ls = 2, ^C = 3):\n");
 	    scanf("%i%*c", &input);
 	    switch(input){

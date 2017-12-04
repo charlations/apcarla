@@ -3,6 +3,8 @@
 void sendError(int nsfd, int errorType) {
   int msg_size;
   char reply[SIZE];
+	//Vaciar los strings
+	memset(reply, '\0', sizeof(reply));
   
   switch (errorType) {
     case PermissionDenied:
@@ -45,6 +47,11 @@ void execGet(int nsfd, char *rootDir) {
   char reply[SIZE];
   struct stat ss;
   int fd_in;
+  
+	//Vaciar los strings
+	memset(addr, '\0', sizeof(addr));
+	memset(aux, '\0', sizeof(aux));
+	memset(reply, '\0', sizeof(reply));
   
   //lee tamaño
   read(nsfd, &msg_size, sizeof(int));
@@ -98,6 +105,11 @@ void execList(int nsfd, char *rootDir){
   DIR *newDir;
   struct dirent *dir_entry;
   
+	//Vaciar los strings
+	memset(addr, '\0', sizeof(addr));
+	memset(aux, '\0', sizeof(aux));
+	memset(reply, '\0', sizeof(reply));
+  
   read(nsfd, &msg_size, sizeof(int));
   read(nsfd, &addr, msg_size * sizeof(char));
   
@@ -146,6 +158,17 @@ void execList(int nsfd, char *rootDir){
   strcpy(reply, "");
 }
 
+void execBye(int nsfd) {
+  int msg_size;
+  char addr[NAME_MAX + 1];
+  
+  memset(addr, '\0', sizeof(addr));
+  
+  read(nsfd, &msg_size, sizeof(int));
+  read(nsfd, &addr, msg_size * sizeof(char));
+  exit(0);
+}
+
 
 void serves_client(int nsfd, char *rootDir) {
   int code_sent, cmd_recieved, msg_size;
@@ -176,13 +199,12 @@ void serves_client(int nsfd, char *rootDir) {
         execList(nsfd, rootDir);
       break;
       case BYE:
-        //do nothing
+        execBye(nsfd);
       break;
       default:
         sendError(nsfd, UnknownCommand);
       break;
     }
-    cmd_recieved = UnknownCommand;
     //end do
   } while (cmd_recieved != BYE);
   
